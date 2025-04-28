@@ -91,8 +91,8 @@ with st.form("prediction_form"):
     skin_thickness = st.number_input('Skin Thickness (mm)', min_value=0)
     insulin = st.number_input('2-Hour Serum Insulin (μU/mL)', min_value=0)
 
-    bmi_input = st.number_input('BMI', value=bmi if bmi else 0.0)
-    dpf_input = st.number_input('Diabetes Pedigree Function (DPF)', value=dpf if dpf else 0.0)
+    bmi_input = st.number_input('BMI', value=bmi if bmi else 0.0, format="%.2f")
+    dpf_input = st.number_input('Diabetes Pedigree Function (DPF)', value=dpf if dpf else 0.0, format="%.2f")
     age = st.number_input('Age', min_value=0)
 
     submitted = st.form_submit_button("🔎 Predict Diabetes Risk")
@@ -146,4 +146,5 @@ This app is a predictive tool based on machine learning models.
 It is not a substitute for professional medical advice, diagnosis, or treatment.  
 Always consult a licensed healthcare provider.
 """)
+
 
