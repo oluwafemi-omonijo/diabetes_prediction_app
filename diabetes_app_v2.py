@@ -66,7 +66,7 @@ if weight > 0 and height_cm > 0:
 st.write("---")
 
 # --- Diabetes Pedigree Function (DPF) Calculator Section ---
-st.header("Step 2: Diabetes Pedigree Function (DPF) Calculator (Optional)")
+st.header("Step 2: Diabetes Pedigree Function (DPF) Calculator (Required)")
 
 st.write("""
 **What is Diabetes Pedigree Function (DPF)?**  
@@ -74,6 +74,9 @@ st.write("""
 - It considers the number of immediate family members (parents, siblings) with diabetes.
 - Higher DPF values suggest a higher inherited risk.
 - DPF alone does **NOT** diagnose diabetes.
+
+👉🏽 Please complete the short family history questions below to calculate your DPF.  
+👉🏽 This is **required** to proceed with risk prediction.
 """)
 
 parents_diabetes = st.selectbox('How many of your parents have diabetes?', [0, 1, 2])
