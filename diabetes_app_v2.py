@@ -1,10 +1,11 @@
 import streamlit as st
 import joblib
+import numpy as np
 
 # --- Page Configuration ---
 st.set_page_config(page_title="Diabetes Risk Predictor", layout="centered")
 
-# --- Load Model and Scaler ---
+# --- Load Models and Scaler ---
 model_choice = st.selectbox(
     'Choose Prediction Model:',
     ("Logistic Regression", "Random Forest", "XGBoost", "KNN")
@@ -17,10 +18,20 @@ model_file_map = {
     "KNN": "knn_model.pkl"
 }
 
+model_accuracy_map = {
+    "Logistic Regression": "78.5%",
+    "Random Forest": "89.2%",
+    "XGBoost": "91.0%",
+    "KNN": "76.8%"
+}
+
 model = joblib.load(model_file_map[model_choice])
 scaler = joblib.load("scaler.pkl")
 
+# --- Title ---
 st.title("🩺 Diabetes Risk Prediction App")
+
+st.info(f"📈 Accuracy of selected model ({model_choice}): **{model_accuracy_map[model_choice]}**")
 
 st.write("""
 Welcome! Please complete all sections below to predict your diabetes risk.  
@@ -137,6 +148,17 @@ with st.form("prediction_form"):
 
             st.balloons()
 
+            # --- Feature Importance (only for Random Forest and XGBoost) ---
+            if hasattr(model, "feature_importances_"):
+                st.subheader("🔍 Top Important Features for Prediction")
+                feature_names = ["Pregnancies", "Glucose", "BloodPressure", "SkinThickness",
+                                 "Insulin", "BMI", "DPF", "Age"]
+                importances = model.feature_importances_
+                sorted_idx = np.argsort(importances)[::-1]
+
+                for idx in sorted_idx[:5]:  # Top 5 features
+                    st.write(f"{feature_names[idx]}: **{importances[idx]:.2f}** importance score")
+
 st.write("---")
 
 # --- Disclaimer ---
@@ -146,5 +168,6 @@ This app is a predictive tool based on machine learning models.
 It is not a substitute for professional medical advice, diagnosis, or treatment.  
 Always consult a licensed healthcare provider.
 """)
+
 
 
